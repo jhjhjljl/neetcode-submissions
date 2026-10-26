@@ -1,27 +1,22 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
         length = len(height)
-        max_left = height[0]
-        max_right = height[length - 1]
-        max_left_arr = [0] * length
-        max_right_arr = [0] * length
-        min_left_right_arr = [0] * length
+        max_left = [0] * length
+        max_right = [0] * length
         diff = [0] * length
+        result = 0
+        current_max_left = height[0]
+        current_max_right = height[-1]
         for i in range(1, length):
-            max_left_arr[i] = max_left
-            max_left = max(max_left, height[i])
+            max_left[i] = current_max_left
+            current_max_left = max(current_max_left, height[i])
         for i in range(length - 2, -1, -1):
-            max_right_arr[i] = max_right
-            max_right = max(max_right, height[i])
+            max_right[i] = current_max_right
+            current_max_right = max(current_max_right, height[i])
         for i in range(length):
-            min_left_right_arr[i] = min(max_left_arr[i], max_right_arr[i])
-        for i in range(length):
-            diff[i] = min_left_right_arr[i] - height[i]
+            diff[i] = min(max_left[i], max_right[i]) - height[i]
             if diff[i] < 0:
                 diff[i] = 0
-        result = 0
         for x in diff:
             result += x
         return result
-
-        
