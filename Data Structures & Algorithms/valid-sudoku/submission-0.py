@@ -1,36 +1,37 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
         for i in range(9):
-            unique = set()
+            seen = set()
             for j in range(9):
-                if board[i][j] == ".":
+                current_item = board[i][j]
+                if current_item == ".":
                     continue
-                if board[i][j] in unique:
+                if current_item in seen:
                     return False
-                else:
-                    unique.add(board[i][j])
+                seen.add(current_item)
         for i in range(9):
-            unique = set()
+            seen = set()
             for j in range(9):
-                if board[j][i] == ".":
+                current_item = board[j][i]
+                if current_item == ".":
                     continue
-                if board[j][i] in unique:
+                if current_item in seen:
                     return False
-                else:
-                    unique.add(board[j][i])
+                seen.add(current_item)
         for square in range(9):
-            unique = set()
+            seen = set()
             for i in range(3):
                 for j in range(3):
-                    row = (square // 3) * 3 + i
-                    col = (square % 3) * 3 + j
-                    if board[row][col] == ".":
+                    row_index = (square // 3) * 3 + i
+                    col_index = (square % 3) * 3 + j
+                    current_item = board[row_index][col_index]
+                    if current_item == ".":
                         continue
-                    if board[row][col] in unique:
-                        return False 
-                    else:
-                        unique.add(board[row][col])
+                    if current_item in seen:
+                        return False
+                    seen.add(current_item)
         return True
 
+        
 
-
+        
