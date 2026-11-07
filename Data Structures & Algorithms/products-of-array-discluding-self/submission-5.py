@@ -1,27 +1,63 @@
+"""
+[1, 2, 4, 6]
+
+prefix = 1
+
+store prefix at i
+then multiply prefix with nums[i]
+
+i = 0
+[1, 1, 1, 1]
+prefix = 1
+
+i = 1
+[1, 1, 1, 1]
+prefix = 2
+
+i = 2
+[1, 1, 2, 1]
+prefix = 8
+
+i = 3
+[1, 1, 2, 8]
+prefix = 48
+
+nums = [1, 2, 4, 6]
+result = [1, 1, 2, 8]
+
+suffix = 1
+
+i = 3
+[1, 1, 2, 8]
+suffix = 6
+
+i = 2
+[1, 1, 12, 8]
+suffix = 24
+
+i = 1
+[1, 24, 12, 8]
+suffix = 48
+
+i = 0
+[48, 24, 12, 8]
+suffix = 48
+
+time complexity: O(n)
+space complexity: O(1) excluding output array.
+"""
+
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        length = len(nums)
-        zero_count = 0
-        zero_index = 0
-        prod_total = 1
-        result = [0] * length
-        for i, x in enumerate(nums):
-            if x:
-                prod_total *= x
-            else:
-                zero_index = i
-                zero_count += 1
-        if zero_count > 1:
-            return result
-        elif zero_count == 1:
-            result[zero_index] = prod_total
-            return result
-        else:
-            for i in range(length):
-                result[i] = prod_total // nums[i]
-            return result
-
-            
+        n = len(nums)
+        result = [1] * n
+        prefix = 1
+        suffix = 1
+        for i in range(n):
+            result[i] = prefix
+            prefix = prefix * nums[i]
+        for i in range(n - 1, -1, -1):
+            result[i] = result[i] * suffix
+            suffix = suffix * nums[i]
+        return result
         
-        
-            
