@@ -1,21 +1,22 @@
-from collections import Counter
+from collections import defaultdict
 
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        count = Counter(nums)
-        sorted_count = []
-        for key, val in count.items():
-            sorted_count.append([val, key])
-        sorted_count.sort()
+        n = len(nums)
+        buckets = [[] for _ in range(n)]
+        counter = defaultdict(int)
+        for x in nums:
+            counter[x] += 1
+        for key, val in counter.items():
+            buckets[val - 1].append(key)
         result = []
-        current = 0
-        for i in range(len(sorted_count) - 1, -1, -1):
-            if current == k:
-                break
-            result.append(sorted_count[i][1])
-            current += 1
-        return result
-            
-
+        k_remaining = k
+        for i in range(n - 1, -1, -1):
+            for x in buckets[i]:
+                result.append(x)
+                k_remaining -= 1
+                if k_remaining == 0:
+                    return result
+        
         
