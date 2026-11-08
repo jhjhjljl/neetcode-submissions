@@ -1,13 +1,28 @@
+"""
+max_profit = 0
+[10,1,5,6,7,1]
+
+
+l  | r | max_profit
+10 | 1 | 0
+1  | 5 | 4
+1  | 6 | 5
+1  | 7 | 6
+1  | 1 | 6 
+time: O(n)
+space: O(1)
+"""
+
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        left_ptr = 0
-        right_ptr = 1
-        result = 0
-        while right_ptr < len(prices):
-            if prices[right_ptr] > prices[left_ptr]: 
-                profit = prices[right_ptr] - prices[left_ptr]
-                result = max(result, profit)
+        l = 0
+        r = 1
+        max_profit = 0
+        while r < len(prices):
+            if prices[l] > prices[r]:
+                l = r
             else:
-                left_ptr = right_ptr
-            right_ptr += 1
-        return result
+                max_profit = max(max_profit, prices[r] - prices[l])
+            r += 1
+        return max_profit
+        
