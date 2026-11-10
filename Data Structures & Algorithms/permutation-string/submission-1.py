@@ -2,48 +2,45 @@
 s1 = "abc"
 s2 = "lecabee"
 
+lecabee
+    i 
 
-counts_s1 = {
-    a: 1,
-    b: 1,
-    c: 1
-}
+i | window | valid
+0 | lec    | x
+1 | eca    | x
+2 | cab    | o
+3 | abe    | x 
+4 | bee    | x
 
-l e c a b e e
-l   r           { l: 1, e: 1, c: 1 }
-  l   r         { e: 1, c: 1, a: 1 }
-    l   r       { c: 1, a: 1, b: 1 }    found
-      l   r     { a: 1, b: 1, e: 1 }
-        l   r   { b: 1, e: 2 }
-
-for r starting from length of s1, upto length of s2:
-    add s[r] from count
-    remove s[l] from count
-    if count_1 equals count_2:
-        return true
-    increment l
-
-time complexity: O(n)
-space complexity: O(1) -> upto 26. not infinite
+time: O(n)
+space: O(1)
 """
-
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        if len(s1) > len(s2):
+        s1_length = len(s1)
+        s2_length = len(s2)
+        if s1_length > s2_length:
             return False
-        counts_s1 = [0] * 26
-        counts_s2 = [0] * 26
-        for i in range(len(s1)):
-            counts_s1[ord(s1[i]) - ord("a")] += 1
-            counts_s2[ord(s2[i]) - ord("a")] += 1
-        if counts_s1 == counts_s2:
+        s1_counter = {}
+        s2_counter = {}
+        for i in range(s1_length):
+            s1_counter[s1[i]] = s1_counter.get(s1[i], 0) + 1
+            s2_counter[s2[i]] = s2_counter.get(s2[i], 0) + 1
+        if s1_counter == s2_counter:
             return True
-        l = 0
-        for r in range(len(s1), len(s2)):
-            counts_s2[ord(s2[l]) - ord("a")] -= 1
-            counts_s2[ord(s2[r]) - ord("a")] += 1
-            if counts_s2 == counts_s1:
+        for i in range(1, s2_length - s1_length + 1):
+            s2_counter[s2[i - 1]] = s2_counter.get(s2[i - 1], 0) - 1
+            if s2_counter[s2[i - 1]] == 0:
+                del s2_counter[s2[i - 1]]
+            right_char = s2[i + s1_length - 1]
+            s2_counter[right_char] = s2_counter.get(right_char, 0) + 1 
+            if s1_counter == s2_counter:
                 return True
-            l += 1
         return False
+
+
+            
+
+        
+
         
