@@ -3,19 +3,19 @@ from collections import Counter
 
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        freq = [[] for _ in range(len(nums) + 1)]
-        count = Counter(nums)
-        for key, val in count.items():
-            freq[val].append(key)
+        n = len(nums)
+        buckets = [[] for _ in range(n)]
+        counter = Counter(nums)
+        for key, val in counter.items():
+            buckets[val - 1].append(key)
         result = []
-        num_items = 0
-        for i in range(len(freq) - 1, -1, -1):
-            if num_items == k:
-                break
-            if not freq[i]:
-                continue
-            for x in freq[i]:
+        for i in range(n - 1, -1, -1):
+            for x in buckets[i]:
                 result.append(x)
-                num_items += 1
+                if len(result) == k:
+                    return result
         return result
+
+            
+        
         
