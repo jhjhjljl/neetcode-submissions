@@ -1,9 +1,25 @@
+"""
+[10,3,5,1,7,1]
+        l
+          r
+
+l | r | profit | max_profit
+0 | 1 | -7     | 0
+1 | 2 |  2     | 2
+1 | 3 | -2     | 2
+3 | 4 |  6     | 6
+
+"""
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         max_profit = 0
-        length = len(prices)
-        for i in range(length):
-            for j in range(i + 1, length):
-                current_profit = prices[j] - prices[i]
-                max_profit = max(max_profit, current_profit)
+        left = 0
+        for right in range(1, len(prices)):
+            current_profit = prices[right] - prices[left]
+            max_profit = max(max_profit, current_profit)
+            if prices[left] > prices[right]:
+                left = right
         return max_profit
+            
+
+        
