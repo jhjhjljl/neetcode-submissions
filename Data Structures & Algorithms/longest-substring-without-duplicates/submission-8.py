@@ -1,36 +1,36 @@
 """
+abcabcbb
+l
+   r
 
-r - l + 1
-longest 5
+l | r | current_window
+0 | 0 | {a}
+0 | 1 | {a, b}
+0 | 2 | {a, b, c}
+0 | 3 | {a, b, c}
+1 | 3 | {a, b, c}
+1 | 4 | {a, b, c}
+2 | 4 | {a, b, c}
+2 | 5 | {a, b, c}
+3 | 5 | {a, b, c}
+3 | 5 | {a, b, c}
+3 | 6 | {a, b, c}
+4 | 6 | {b, c}
+5 | 6 | {c, b}
 
-hs {d, e, a, c}
-
-
-b c a a b c d e a c
-            l
-                  r   
-
-while s[r] is in hs, remove the s[l] from hs, then increment left counter by one
-
-then we add s[r] into hs
-then we can calculate the size of the width
-
-time complexity: o(n)
-space complexity: o(1)
 """
-
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        n = len(s)
-        l = 0
-        longest = 0
-        hs = set()
-        for r in range(n):
-            while s[r] in hs:
-                hs.remove(s[l])
-                l += 1
-            hs.add(s[r])
-            longest = max(longest, r - l + 1)
-        return longest
+        window = set()
+        left = 0
+        max_length = 0
+        for right in range(len(s)):
+            while s[right] in window:
+                window.remove(s[left])
+                left += 1
+            window.add(s[right])
+            max_length = max(max_length, right - left + 1)
+        return max_length
+
 
         
